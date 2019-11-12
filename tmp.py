@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 
 ax = 0
 ay = 0
@@ -14,9 +14,10 @@ dy = (by+ay)/2
 D = (dx, dy)
 
 cx = (ax + bx)/2
-cy = sqrt(((ax+bx)/2)**2 - ((ax+dx)/2)**2)
+cy = np.sqrt(((ax+bx)/2)**2 - ((ax+dx)/2)**2)
 C = (cx,cy)
 
-plt.scaterplot(A,B,C)
+print(f"A:{A}, B:{B}, C:{C}")
+plt.scatter(A,B,C)
 plt.show()
 
