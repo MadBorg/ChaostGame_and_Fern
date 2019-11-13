@@ -26,26 +26,24 @@ def triangle(c0,c1,c2=None, plot=False):
 
 
 def ex_b():
-    plt.figure()
+    n = 100000
 
     w = np.random.random(3)
     w /= np.sum(w)
 
     c = triangle(np.array((0,0)), np.array((1,0)))
-    x = 0
-    for i in range(3):
-        x += w[i]*c[i]
 
-    x_points = np.zeros(1000)
+    x = np.dot(w, c)
+    x_points = np.zeros((n,2))
+    x_points[0] = x
 
+    k = np.random.randint(3, size=n)
 
-    for j in range(5000):
-        i = np.random.randint(3)
-        x_next = (x + c[i])/2
-        plt.plot(x_next[0], x_next[1], ',b')
+    for i in range(1, n):
+        x_points[i] = (x_points[i-1]+c[k[i]])/2
 
-        x = x_next
-
+    plt.scatter(*zip(*x_points[5:]), marker= '.', s=0.1)
+    plt.axis('equal')
     plt.show()
 
 if __name__ == "__main__":
