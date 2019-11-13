@@ -38,16 +38,16 @@ def ex_b():
     x_points[0] = x
 
     k = np.random.randint(3, size=n)
-
+    # color = np.empty(n)
+    col = np.where(k==0, "r", np.where(k==1, "b", "g"))
     for i in range(1, n):
         x_points[i] = (x_points[i-1]+c[k[i]])/2
 
-    plt.scatter(*zip(*x_points[5:]), marker= '.', s=0.1)
+    plt.scatter(*zip(*x_points[5:]), marker= '.', s=0.1, color=col[5:])
     plt.axis('equal')
     plt.show()
 
 if __name__ == "__main__":
-    c0, c1 = np.array((0,0)), np.array((1,0))
-    triangle(c0,c1, plot=True)
-
+    # c0, c1 = np.array((0,0)), np.array((1,0))
+    # triangle(c0,c1, plot=True)
     ex_b()
