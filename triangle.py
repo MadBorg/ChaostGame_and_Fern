@@ -17,7 +17,7 @@ def triangle(c0,c1,c2=None, plot=False):
             (np.sin(-theta), np.cos(theta))
         ))
         c2 = diff @ rotation
-    print(f"c0:{c0}, c1:{c1}, c2:{c2}")
+    # print(f"c0:{c0}, c1:{c1}, c2:{c2}")
     if plot:
         fig, ax = plt.subplots()
         ax.scatter(*zip(*(c0,c1,c2)))
@@ -67,11 +67,11 @@ def serpinski_color_plot(x, k, color=("r", "g", "b")):
     col1, col2, col3 = color
     col = np.where(k==0,col1 , np.where(k==1, col2, col3))
 
-    plt.scatter(*zip(*x[5:]), marker= '.', s=0.1, color=col[5:])
+    plt.scatter(*zip(*x[5:]), marker= '.', s=0.2, color=col[5:])
     plt.axis('equal')
     plt.show()
 
-def serpinski_alternative_colors(x,k):
+def serpinski_alternative_colors(x,k, file_name=None):
     n = len(k)
     r = np.array((
         (1,0,0),
@@ -83,15 +83,20 @@ def serpinski_alternative_colors(x,k):
     for i in range(1, len(k)):
         col[i] = (col[i-1]+r[k[i]])/2
 
-    plt.scatter(*zip(*x[5:]), marker= '.', s=0.1, c=col[5:])
+    fig, ax = plt.subplots()
+    ax.scatter(*zip(*x[5:]), marker= '.', s=0.2, c=col[5:])
     plt.axis('equal')
+    plt.axis("off")
+    if type(file_name) is str:
+        fig.savefig(file_name)
     plt.show()
     
 
 if __name__ == "__main__":
-    x, k = serpinski(100000)
+    n = int( 1e5)
+    x, k = serpinski(n)
     # serpinski_color_plot(x,k)
-    serpinski_alternative_colors(x,k)
+    serpinski_alternative_colors(x,k")
     
     
 
