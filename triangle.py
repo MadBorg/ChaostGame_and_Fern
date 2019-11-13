@@ -47,7 +47,38 @@ def ex_b():
     plt.axis('equal')
     plt.show()
 
+def serpinski(n=10000):
+    n = 100000
+
+    w = np.random.random(3)
+    w /= np.sum(w)
+
+    c = triangle(np.array((0,0)), np.array((1,0)))
+
+    x = np.dot(w, c)
+    x_points = np.zeros((n,2))
+    x_points[0] = x
+
+    k = np.random.randint(3, size=n)
+
+    for i in range(1, n):
+        x_points[i] = (x_points[i-1]+c[k[i]])/2
+    return x_points, k
+
+def serpinski_color_plot(x, k, color=("r", "g", "b")):
+    col1, col2, col3 = color
+    col = np.where(k==0,col1 , np.where(k==1, col2, col3))
+
+    plt.scatter(*zip(*x[5:]), marker= '.', s=0.1, color=col[5:])
+    plt.axis('equal')
+    plt.show()
+
+def serpinski_alternative_colors(x,k):
+    
+
 if __name__ == "__main__":
     # c0, c1 = np.array((0,0)), np.array((1,0))
     # triangle(c0,c1, plot=True)
-    ex_b()
+    x, k = serpinski()
+    serpinski_color_plot(x,k)
+
