@@ -14,9 +14,9 @@ def triangle(c0,c1,c2=None, plot=False):
         theta = 60/180*np.pi
         rotation = np.array((
             (np.cos(theta), np.sin(theta)),
-            (np.cos(-theta), np.cos(theta))
+            (np.sin(-theta), np.cos(theta))
         ))
-        c2 = rotation @ diff
+        c2 = diff @ rotation
     print(f"c0:{c0}, c1:{c1}, c2:{c2}")
     if plot:
         fig, ax = plt.subplots()
