@@ -47,18 +47,18 @@ def ex_b():
     plt.axis('equal')
     plt.show()
 
-def serpinski(n=10000):
-    w = np.random.random(3)
-    w /= np.sum(w)
-
+def serpinski(n=10_000):
     c = triangle(np.array((0,0)), np.array((1,0)))
 
+    #init x and find x0
+    w = np.random.random(3)
+    w /= np.sum(w)
     x = np.dot(w, c)
+    k = np.random.randint(3, size=n)
     x_points = np.zeros((n,2))
     x_points[0] = x
 
-    k = np.random.randint(3, size=n)
-
+    #the algroithm
     for i in range(1, n):
         x_points[i] = (x_points[i-1]+c[k[i]])/2
     return x_points, k
