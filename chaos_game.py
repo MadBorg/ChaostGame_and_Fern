@@ -1,28 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-<<<<<<< Updated upstream
 
-ax = 0
-ay = 0
-A = (ax,ay)
-
-bx = 1
-by = 0
-B = (bx, by)
-
-dx = (bx+ax)/2
-dy = (by+ay)/2
-D = (dx, dy)
-
-cx = (ax + bx)/2
-cy = np.sqrt(((ax+bx)/2)**2 - ((ax+dx)/2)**2)
-C = (cx,cy)
-
-print(f"A:{A}, B:{B}, C:{C}")
-plt.scatter(A,B,C)
-plt.show()
-=======
-import timeit
 
 class ChaosGame():
     """A class for a chaos game.
@@ -50,11 +28,9 @@ class ChaosGame():
         n = self.n
         theta = np.linspace(0, 2*np.pi, n+1)
         c = np.zeros((n, 2))
-        c[:, 0] = np.sin(theta[:-1])
-        c[:, 1] = np.cos(theta[:-1])
-        # for i in range(n):
-        #     c[i] = (np.sin(theta[i]), np.cos(theta[i]))
->>>>>>> Stashed changes
+
+        for i in range(n):
+            c[i] = (np.sin(theta[i]), np.cos(theta[i]))
 
         self.c = c
 
@@ -72,7 +48,7 @@ class ChaosGame():
 
         return x
 
-    def iterate(self, steps=100_000, discard=5):
+    def iterate(self, steps=100000, discard=5):
         r = self.r
         c = self.c
         k = np.random.randint(self.n, size=steps)
@@ -85,13 +61,13 @@ class ChaosGame():
 
         return y
 
-    def plot(self, color=False, cmap='jet', show=True):
+    def plot(self, color=False, cmap='jet'):
         new = self.iterate()
 
-        if show:
-            plt.scatter(*zip(*new[5:]), marker= '.', s=0.2)
-            plt.axis('equal')
-            plt.show()
+        plt.scatter(*zip(*new[5:]), marker= '.', s=0.2)
+        plt.axis('equal')
+        plt.show()
+
 
 
 if __name__ == "__main__":
@@ -100,6 +76,5 @@ if __name__ == "__main__":
         #test = ChaosGame(i)
         #test.plot_ngon()
 
-    # test = ChaosGame(n=int(1e5), r=1/5)
-    # test.plot()
-    print(timeit.timeit("x = ChaosGame(n=int(1e3), r=1/5); x.plot(show=False)", setup="from __main__ import ChaosGame", number=100))
+    test = ChaosGame(n=8, r=1/100)
+    test.plot()
