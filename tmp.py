@@ -59,17 +59,32 @@ class ChaosGame():
 
         for i in range(1, steps):
             y[i] = (r*y[i-1]) + ((1-r)*c[k[i]])
+        self.k = k[discard:]
+        return y[discard:]
 
-        return y
-
-    def plot(self, color=False, cmap='jet', show=True):
+    def plot(self, color=False, cmap='jet'):
         new = self.iterate()
+        fig, ax = plt.subplots()
+        if color:
+            k = self.k
+            # colors = np.where(k==0,col1 , np.where(k==1, col2, col3))
+            colors = k
+            ax.scatter(*zip(*new), marker= '.', s=0.2, c=colors, cmap=cmap)
+        else:
+            ax.scatter(*zip(*new), marker= '.', s=0.2)
+        ax.axis('equal')
+        return fig, ax
 
-        if show:
-            plt.scatter(*zip(*new[5:]), marker= '.', s=0.2)
-            plt.axis('equal')
-            plt.show()
+    def show(self, color=False, cmap='jet'):
+        fig, ax = self.plot(color, cmap)
+        fig.show()
 
+
+
+def check_plot():
+    g = ChaosGame(3,1/2)
+    g.show(color=True)
+    # g.show(color=True)
 
 if __name__ == "__main__":
 
@@ -79,4 +94,6 @@ if __name__ == "__main__":
 
     # test = ChaosGame(n=int(1e5), r=1/5)
     # test.plot()
-    print(timeit.timeit("x = ChaosGame(n=int(1e3), r=1/5); x.plot(show=False)", setup="from __main__ import ChaosGame", number=100))
+    # print(timeit.timeit("x = ChaosGame(n=int(1e3), r=1/5); x.plot(show=False)", setup="from __main__ import ChaosGame", number=100))
+
+    check_plot()
