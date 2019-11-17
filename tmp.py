@@ -1,27 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-<<<<<<< Updated upstream
-
-ax = 0
-ay = 0
-A = (ax,ay)
-
-bx = 1
-by = 0
-B = (bx, by)
-
-dx = (bx+ax)/2
-dy = (by+ay)/2
-D = (dx, dy)
-
-cx = (ax + bx)/2
-cy = np.sqrt(((ax+bx)/2)**2 - ((ax+dx)/2)**2)
-C = (cx,cy)
-
-print(f"A:{A}, B:{B}, C:{C}")
-plt.scatter(A,B,C)
-plt.show()
-=======
 import timeit
 
 class ChaosGame():
@@ -54,7 +32,6 @@ class ChaosGame():
         c[:, 1] = np.cos(theta[:-1])
         # for i in range(n):
         #     c[i] = (np.sin(theta[i]), np.cos(theta[i]))
->>>>>>> Stashed changes
 
         self.c = c
 
