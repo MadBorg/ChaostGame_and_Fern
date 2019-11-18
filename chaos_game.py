@@ -59,12 +59,12 @@ class ChaosGame():
         for i in range(1, steps):
             y[i] = (r*y[i-1]) + ((1-r)*c[k[i]])
 
-        return y
+        return y, k[5:]
 
     def plot(self, color=False, cmap='jet'):
-        new = self.iterate()
-
-        plt.scatter(*zip(*new[5:]), marker= '.', s=0.2)
+        new, k = self.iterate()
+        
+        plt.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=k)
         plt.axis('equal')
         plt.show()
 
