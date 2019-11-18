@@ -63,10 +63,21 @@ class ChaosGame():
 
     def plot(self, color=False, cmap='jet'):
         new, k = self.iterate()
-        
-        plt.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=k)
-        plt.axis('equal')
+        fig, ax = plt.subplots()
+        if color:
+            ax.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=k)
+        else:
+            ax.scatter(*zip(*new[5:]), marker= '.', s=0.2)
+            
+        ax.axis('equal')
+        # return fig, ax
+
+    def show(self, color=False, cmap='jet'):
+        # fig, ax = self.plot(color, cmap)
+        self.plot(color, cmap)
         plt.show()
+
+
 
 
 
@@ -77,4 +88,4 @@ if __name__ == "__main__":
         #test.plot_ngon()
 
     test = ChaosGame(n=8, r=1/3)
-    test.plot()
+    test.show()
