@@ -66,6 +66,9 @@ class ChaosGame():
         fig, ax = plt.subplots()
         if color:
             ax.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=k)
+        elif color is None:
+            g = self._compute_color(k)
+            ax.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=g)
         else:
             ax.scatter(*zip(*new[5:]), marker= '.', s=0.2)
             
@@ -77,6 +80,17 @@ class ChaosGame():
         self.plot(color, cmap)
         plt.show()
 
+    def _compute_color(self, k):
+        n = len(k)
+        r = np.identity(self.n)
+
+        col = np.empty((n,self.n))
+        col[0] = np.random.random(self.n)
+        for i in range(1,n):
+            col[i] = (col[i-1]+r[k[i]])/2
+        # col = col / self.n
+        return col
+
 
 
 
@@ -87,5 +101,5 @@ if __name__ == "__main__":
         #test = ChaosGame(i)
         #test.plot_ngon()
 
-    test = ChaosGame(n=8, r=1/3)
-    test.show()
+    test = ChaosGame(n=6, r=1/3)
+    test.show(color=None)
