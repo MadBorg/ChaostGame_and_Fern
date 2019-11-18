@@ -16,12 +16,13 @@ class ChaosGame():
     def __init__(self, n=3, r=1/2):
         self.n = n
         self.r = r
-        self._generate_ngon()
 
         if type(n) != int:
             raise ValueError("n must be an integer")
         if not 0 < r < 1:
             raise ValueError("r must be on (0,1) interval")
+
+        self._generate_ngon()
 
 
     def _generate_ngon(self):
@@ -71,7 +72,7 @@ class ChaosGame():
             ax.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=g)
         else:
             ax.scatter(*zip(*new[5:]), marker= '.', s=0.2)
-            
+
         ax.axis('equal')
         # return fig, ax
 
@@ -102,4 +103,4 @@ if __name__ == "__main__":
         #test.plot_ngon()
 
     test = ChaosGame(n=6, r=1/3)
-    test.show(color=None)
+    test.show(color=True)
