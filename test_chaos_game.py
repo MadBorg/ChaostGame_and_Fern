@@ -10,7 +10,14 @@ def test_init_values():
     with npt.assert_raises(ValueError):
         test = ChaosGame(n=wrong_n, r=wrong_r)
 
+def test_called_iterate():
+    test = ChaosGame()
+
+    with npt.assert_raises(AttributeError):
+        test.show()
+
 
 if __name__ == "__main__":
 
     test_init_values()
+    test_called_iterate()
