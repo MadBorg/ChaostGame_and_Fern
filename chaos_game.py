@@ -23,6 +23,7 @@ class ChaosGame():
             raise ValueError("r must be on (0,1) interval")
 
         self._generate_ngon()
+        self._starting_point()
 
 
     def _generate_ngon(self):
@@ -47,31 +48,33 @@ class ChaosGame():
         w /= np.sum(w)
         x = np.dot(w, self.c)
 
-        return x
+        self.x = x
 
     def iterate(self, steps=100000, discard=5):
         r = self.r
         c = self.c
+        x = self.x
         k = np.random.randint(self.n, size=steps)
 
         y = np.zeros((steps, 2))
-        y[0] = self._starting_point()
+        y[0] = x
 
         for i in range(1, steps):
             y[i] = (r*y[i-1]) + ((1-r)*c[k[i]])
 
-        return y, k[5:]
+        self.y, self.k = y[discard:], k[discard:]
 
     def plot(self, color=False, cmap='jet'):
-        new, k = self.iterate()
+        y, k = self.y, self.k
+
         fig, ax = plt.subplots()
         if color:
-            ax.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=k)
+            ax.scatter(*zip(*y), marker= '.', s=0.2, cmap="jet", c=k)
         elif color is None:
             g = self._compute_color(k)
-            ax.scatter(*zip(*new[5:]), marker= '.', s=0.2, cmap="jet", c=g)
+            ax.scatter(*zip(*y), marker= '.', s=0.2, cmap="jet", c=g)
         else:
-            ax.scatter(*zip(*new[5:]), marker= '.', s=0.2)
+            ax.scatter(*zip(*y), marker= '.', s=0.2)
 
         ax.axis('equal')
         # return fig, ax
@@ -103,4 +106,5 @@ if __name__ == "__main__":
         #test.plot_ngon()
 
     test = ChaosGame(n=6, r=1/3)
+    test.iterate()
     test.show(color=True)
