@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class ChaosGame():
+class ChaosGame:
     """A class for a chaos game.
 
     Parameters
@@ -13,7 +13,7 @@ class ChaosGame():
         Ratio between two points.
     """
 
-    def __init__(self, n=3, r=1/2):
+    def __init__(self, n=3, r=1 / 2):
         self.n = n
         self.r = r
 
@@ -25,10 +25,9 @@ class ChaosGame():
         self._generate_ngon()
         self._starting_point()
 
-
     def _generate_ngon(self):
         n = self.n
-        theta = np.linspace(0, 2*np.pi, n+1)
+        theta = np.linspace(0, 2 * np.pi, n + 1)
         c = np.zeros((n, 2))
 
         for i in range(n):
@@ -38,9 +37,8 @@ class ChaosGame():
 
     def plot_ngon(self):
         plt.scatter(*zip(*self.c))
-        plt.axis('equal')
+        plt.axis("equal")
         plt.show()
-
 
     def _starting_point(self):
         n = self.n
@@ -60,26 +58,26 @@ class ChaosGame():
         y[0] = x
 
         for i in range(1, steps):
-            y[i] = (r*y[i-1]) + ((1-r)*c[k[i]])
+            y[i] = (r * y[i - 1]) + ((1 - r) * c[k[i]])
 
         self.y, self.k = y[discard:], k[discard:]
 
-    def plot(self, color=False, cmap='jet'):
+    def plot(self, color=False, cmap="jet"):
         y, k = self.y, self.k
 
         fig, ax = plt.subplots()
         if color:
-            ax.scatter(*zip(*y), marker= '.', s=0.2, cmap="jet", c=k)
+            ax.scatter(*zip(*y), marker=".", s=0.2, cmap="jet", c=k)
         elif color is None:
             g = self._compute_color(k)
-            ax.scatter(*zip(*y), marker= '.', s=0.2, cmap="jet", c=g)
+            ax.scatter(*zip(*y), marker=".", s=0.2, cmap="jet", c=g)
         else:
-            ax.scatter(*zip(*y), marker= '.', s=0.2)
+            ax.scatter(*zip(*y), marker=".", s=0.2)
 
-        ax.axis('equal')
+        ax.axis("equal")
         # return fig, ax
 
-    def show(self, color=False, cmap='jet'):
+    def show(self, color=False, cmap="jet"):
         # fig, ax = self.plot(color, cmap)
         self.plot(color, cmap)
         plt.show()
@@ -88,23 +86,20 @@ class ChaosGame():
         n = len(k)
         r = np.identity(self.n)
 
-        col = np.empty((n,self.n))
+        col = np.empty((n, self.n))
         col[0] = np.random.random(self.n)
-        for i in range(1,n):
-            col[i] = (col[i-1]+r[k[i]])/2
+        for i in range(1, n):
+            col[i] = (col[i - 1] + r[k[i]]) / 2
         # col = col / self.n
         return col
 
 
-
-
-
 if __name__ == "__main__":
 
-    #for i in range(3, 9):
-        #test = ChaosGame(i)
-        #test.plot_ngon()
+    # for i in range(3, 9):
+    # test = ChaosGame(i)
+    # test.plot_ngon()
 
-    test = ChaosGame(n=6, r=1/3)
+    test = ChaosGame(n=6, r=1 / 3)
     test.iterate()
     test.show(color=True)
