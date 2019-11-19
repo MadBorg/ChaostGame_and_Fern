@@ -63,13 +63,16 @@ class ChaosGame:
         self.y, self.k = y[discard:], k[discard:]
 
     def plot(self, color=False, cmap="jet"):
-        y, k = self.y, self.k
-
+        try:
+            y, k = self.y, self.k
+        except AttributeError:
+            raise AttributeError()
         fig, ax = plt.subplots()
         if color:
             ax.scatter(*zip(*y), marker=".", s=0.2, cmap="jet", c=k)
         elif color is None:
             g = self._compute_color(k)
+            print(f"\n\ng.size:{g.shape}, y.shape:{y.shape}, k.shape:{k.shape}\n k:{k}\n\n ")
             ax.scatter(*zip(*y), marker=".", s=0.2, cmap="jet", c=g)
         else:
             ax.scatter(*zip(*y), marker=".", s=0.2)
@@ -83,15 +86,15 @@ class ChaosGame:
         plt.show()
 
     def _compute_color(self, k):
-        len_k = len(k)
-        n = self.n
-        r = np.identity(n)
+        len_k = len(k) # number of iterations
+        n = self.n # vertices 
 
-        col = np.empty((len_k, n))
-        col[0] = np.random.random(n)
+        col = np.empty(len_k)
+        col[0] = k[0]
         for i in range(1, len_k):
-            col[i] = (col[i - 1] + r[k[i]]) / 2
+            col[i] = (col[i - 1] + k[i]) / 2
         # col = col / self.n
+        
         return col
 
 
@@ -101,6 +104,6 @@ if __name__ == "__main__":
     # test = ChaosGame(i)
     # test.plot_ngon()
 
-    test = ChaosGame(n=6, r=1 / 3)
+    test = ChaosGame(n=3, r=1/2)
     test.iterate()
-    test.show(color=True)
+    test.show(color=None)
