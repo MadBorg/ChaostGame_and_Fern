@@ -83,12 +83,13 @@ class ChaosGame:
         plt.show()
 
     def _compute_color(self, k):
-        n = len(k)
-        r = np.identity(self.n)
+        len_k = len(k)
+        n = self.n
+        r = np.identity(n)
 
-        col = np.empty((n, self.n))
-        col[0] = np.random.random(self.n)
-        for i in range(1, n):
+        col = np.empty((len_k, n))
+        col[0] = np.random.random(n)
+        for i in range(1, len_k):
             col[i] = (col[i - 1] + r[k[i]]) / 2
         # col = col / self.n
         return col
