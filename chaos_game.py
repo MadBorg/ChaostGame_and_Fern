@@ -21,6 +21,8 @@ class ChaosGame:
             raise ValueError("n must be an integer")
         if not 0 < r < 1:
             raise ValueError("r must be on (0,1) interval")
+        if n < 1:
+            raise ValueError(f"n must be larger than one. n:{n}") 
 
         self._generate_ngon()
         self._starting_point()
@@ -59,7 +61,6 @@ class ChaosGame:
 
         for i in range(1, steps):
             y[i] = (r * y[i - 1]) + ((1 - r) * c[k[i]])
-
         self.y, self.k = y[discard:], k[discard:]
 
     def plot(self, color=False, cmap="jet"):
@@ -104,6 +105,6 @@ if __name__ == "__main__":
     # test = ChaosGame(i)
     # test.plot_ngon()
 
-    test = ChaosGame(n=3, r=1/2)
+    test = ChaosGame(n=4, r=1/2)
     test.iterate()
     test.show(color=None)
