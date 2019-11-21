@@ -1,28 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import timeit
+import triangle as t
+# ax = 0
+# ay = 0
+# A = (ax,ay)
 
-class ChaosGame():
-    """A class for a chaos game.
+# bx = 1
+# by = 0
+# B = (bx, by)
 
-    Parameters
-    -----------
-    n : int, default: 3
-        Number of sides in n-gon.
-    r : float, default: 1/2
-        Ratio between two points.
-    """
+# dx = (bx+ax)/2
+# dy = (by+ay)/2
+# D = (dx, dy)
 
-    def __init__(self, n=3, r=1/2):
-        self.n = n
-        self.r = r
-        self._generate_ngon()
+# cx = (ax + bx)/2
+# cy = np.sqrt(((ax+bx)/2)**2 - ((ax+dx)/2)**2)
+# C = (cx,cy)
 
-        if type(n) != int:
-            raise ValueError("n must be an integer")
-        if not 0 < r < 1:
-            raise ValueError("r must be on (0,1) interval")
+# print(f"A:{A}, B:{B}, C:{C}")
+# plt.scatter(*zip(A,B,C))
+# plt.show()
+x_points = np.zeros((50,2))
 
+i = np.random.randint(3, size=50)
+
+c = t.triangle((0,0,))
 
     def _generate_ngon(self):
         n = self.n

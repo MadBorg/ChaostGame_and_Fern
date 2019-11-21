@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class ChaosGame():
+class ChaosGame:
     """A class for a chaos game.
 
     Parameters
@@ -13,20 +13,23 @@ class ChaosGame():
         Ratio between two points.
     """
 
-    def __init__(self, n=3, r=1/2):
+    def __init__(self, n=3, r=1 / 2):
         self.n = n
         self.r = r
-        self._generate_ngon()
 
         if type(n) != int:
             raise ValueError("n must be an integer")
         if not 0 < r < 1:
             raise ValueError("r must be on (0,1) interval")
+        if n < 1:
+            raise ValueError(f"n must be larger than one. n:{n}") 
 
+        self._generate_ngon()
+        self._starting_point()
 
     def _generate_ngon(self):
         n = self.n
-        theta = np.linspace(0, 2*np.pi, n+1)
+        theta = np.linspace(0, 2 * np.pi, n + 1)
         c = np.zeros((n, 2))
 
         for i in range(n):
@@ -36,9 +39,8 @@ class ChaosGame():
 
     def plot_ngon(self):
         plt.scatter(*zip(*self.c))
-        plt.axis('equal')
+        plt.axis("equal")
         plt.show()
-
 
     def _starting_point(self):
         n = self.n
@@ -46,35 +48,63 @@ class ChaosGame():
         w /= np.sum(w)
         x = np.dot(w, self.c)
 
-        return x
+        self.x = x
 
     def iterate(self, steps=100000, discard=5):
         r = self.r
         c = self.c
+        x = self.x
         k = np.random.randint(self.n, size=steps)
 
         y = np.zeros((steps, 2))
-        y[0] = self._starting_point()
+        y[0] = x
 
         for i in range(1, steps):
-            y[i] = (r*y[i-1]) + ((1-r)*c[k[i]])
+            y[i] = (r * y[i - 1]) + ((1 - r) * c[k[i]])
+        self.y, self.k = y[discard:], k[discard:]
 
-        return y
+    def plot(self, color=False, cmap="jet"):
+        try:
+            y, k = self.y, self.k
+        except AttributeError:
+            raise AttributeError()
+        fig, ax = plt.subplots()
+        if color:
+            ax.scatter(*zip(*y), marker=".", s=0.2, cmap="jet", c=k)
+        elif color is None:
+            g = self._compute_color(k)
+            print(f"\n\ng.size:{g.shape}, y.shape:{y.shape}, k.shape:{k.shape}\n k:{k}\n\n ")
+            ax.scatter(*zip(*y), marker=".", s=0.2, cmap="jet", c=g)
+        else:
+            ax.scatter(*zip(*y), marker=".", s=0.2)
 
-    def plot(self, color=False, cmap='jet'):
-        new = self.iterate()
+        ax.axis("equal")
+        # return fig, ax
 
-        plt.scatter(*zip(*new[5:]), marker= '.', s=0.2)
-        plt.axis('equal')
+    def show(self, color=False, cmap="jet"):
+        # fig, ax = self.plot(color, cmap)
+        self.plot(color, cmap)
         plt.show()
 
+    def _compute_color(self, k):
+        len_k = len(k) # number of iterations
+        n = self.n # vertices 
+
+        col = np.empty(len_k)
+        col[0] = k[0]
+        for i in range(1, len_k):
+            col[i] = (col[i - 1] + k[i]) / 2
+        # col = col / self.n
+        
+        return col
 
 
 if __name__ == "__main__":
 
-    #for i in range(3, 9):
-        #test = ChaosGame(i)
-        #test.plot_ngon()
+    # for i in range(3, 9):
+    # test = ChaosGame(i)
+    # test.plot_ngon()
 
-    test = ChaosGame(n=8, r=1/100)
-    test.plot()
+    test = ChaosGame(n=4, r=1/2)
+    test.iterate()
+    test.show(color=None)

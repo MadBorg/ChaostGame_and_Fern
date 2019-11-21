@@ -41,3 +41,6 @@
             shape:(n,2)
         k: numpy array<int>
             shape:(3, n)
+        
+            
+        
