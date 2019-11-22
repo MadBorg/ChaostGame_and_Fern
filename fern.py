@@ -66,9 +66,11 @@ class AffineTransform():
             point_list[i] = a(point_list[i-1])
         self.point_list = point_list
 
-    def plot_fern(self):
 
+    def plot_fern(self):
         plt.scatter(*zip(*self.point_list), marker=".", s=0.2, c='g')
+        plt.axis("equal")
+        plt.axis("off")
         plt.show()
 
 
