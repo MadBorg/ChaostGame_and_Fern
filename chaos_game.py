@@ -105,6 +105,6 @@ if __name__ == "__main__":
     # test = ChaosGame(i)
     # test.plot_ngon()
 
-    test = ChaosGame(n=4, r=1/2)
+    test = ChaosGame(n=3, r=1/2)
     test.iterate()
     test.show(color=None)
