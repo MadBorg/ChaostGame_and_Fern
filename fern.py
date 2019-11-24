@@ -67,7 +67,7 @@ def ferns(parameters, distribution, n, x0=0):
     assert len(parameters) == len(distribution), f"lenth of parameters must be equal to lenght of distribution: len(parameters):{len(parameters)}, len(distribution):{len(distribution)}"
     # import IPython; IPython.embed()
 
-    f = []
+    f = [] # list of functions for the affine class
     for i in parameters:
         print(f"\n i:{i}")
         f.append(AffineTransform(a=i[0], b=i[1],c=i[2],d=i[3],e=i[4],f=i[5]))
@@ -75,7 +75,6 @@ def ferns(parameters, distribution, n, x0=0):
     x[0] = x0
     choices = cumChoice(distribution, n)
     for i in range(0, len(choices)):
-
         x[i] = f[choices[i]](*zip(x[i-1]))
     return x
 
