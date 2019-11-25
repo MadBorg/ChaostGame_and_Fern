@@ -22,8 +22,6 @@ def test_variatons_init_dtypes():
     if type(test.y) != np.ndarray:
         raise ValueError(f"y is not an np.ndarray, it is {type(test.y)}")
 
-# def test_variatons_init_color():
-#     #test if color exist
 
 def test_variatons_r():
     x = (0, 0, 1, 2,          1,                   4)
@@ -34,7 +32,28 @@ def test_variatons_r():
     test = variations.Variations(x, y)
     eps = 1e-13
     # import IPython; IPython.embed()
-    assert np.all(abs(test.r - r) < eps), "test_variatons_r failed over: all(abs(test.r - r)) < eps!"
+    assert np.all(abs(test.r - r) < eps), "test_variatons_r failed over: np.all(abs(test.r - r) < eps)"
+
+def test_variatons_theta():
+    x = np.linspace(1, 100, 200)
+    y = np.linspace(1, 100, 200)
+    np.random.shuffle(y)
+    test = variations.Variations(x, y)
+    eps = 1e-10
+    # import IPython; IPython.embed()
+    # using that tan( arctan x ) = x to test theta
+    assert np.all(abs(x/y - np.tan(test.theta)) < eps), "test_variatons_theta failed over: np.all(abs(x/y - np.tan(test.theta)) < eps)"
+
+def test_variatons_phi():
+    x = np.linspace(1, 100, 200)
+    y = np.linspace(1, 100, 200)
+    np.random.shuffle(y)
+    test = variations.Variations(x, y)
+    eps = 1e-10
+    # import IPython; IPython.embed()
+    # using that tan( arctan x ) = x to test theta
+    assert np.all(abs(y/x - np.tan(test.phi)) < eps), "test_variatons_r failed over: np.all(abs(y/x - np.phi(test.theta)) < eps)"
+
 
 def test_variatons_linear():
     n = 1e5
@@ -48,9 +67,29 @@ def test_variatons_linear():
     assert np.all(abs(test._u - x) < eps), "linear changed the x values"
     assert np.all(abs(test._v - y) < eps), "linear changed the y values"
 
+def test_variatons_handkerchief():
+    n = 1e3
+    x = np.linspace(0.1, 1, n)
+    y = np.linspace(0.1, 1, n)
+    np.random.shuffle(y)
+    test = variations.Variations(x, y)
+    test.handkerchief()
+    r, theta = test.r, test.theta
+    x_test = np.arcsin(test._u/r) - r
+    y_test = np.arccos(test._v/r) + r
+    eps = 1e-14
+    import IPython; IPython.embed()
+    assert np.all(abs(test._u - x) < eps), "linear changed the x values"
+    assert np.all(abs(test._v - y) < eps), "linear changed the y values"
+
+# def test_variatons_init_color():
+#     #test if color exist
 
 if __name__ == "__main__":
     test_variatons_init_coordinates_shape()
     test_variatons_init_dtypes()
     test_variatons_linear()
+    # test_variatons_handkerchief()
     test_variatons_r()
+    test_variatons_theta()
+    test_variatons_phi()
