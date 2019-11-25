@@ -69,7 +69,7 @@ def ferns(parameters, distribution, n, x0=0):
 
     f = []
     for i in parameters:
-        print(f"\n i:{i}")
+        # print(f"\n i:{i}")
         f.append(AffineTransform(a=i[0], b=i[1],c=i[2],d=i[3],e=i[4],f=i[5]))
     x = np.zeros((n,2))
     x[0] = x0
