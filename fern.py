@@ -16,7 +16,7 @@ class AffineTransform():
         mat = np.array([[self.a, self.b],[self.c, self.d]],np.float)
         ef = np.array((self.e, self.f))
 
-        new_point = np.dot(point.T,mat) + ef
+        new_point = np.dot(mat,point) + ef
         self.new_point = new_point
         return new_point
 
@@ -75,11 +75,12 @@ def ferns(parameters, distribution, n, x0=0):
     x[0] = x0
     choices = cumChoice(distribution, n)
     for i in range(0, len(choices)):
-
-        x[i] = f[choices[i]](*zip(x[i-1]))
+        # print(f"x[i]:{x[i]}, *zip(z[i]):{x[i]))}")
+        x[i] = f[choices[i]](x[i-1, 0], x[i-1, 1])
     return x
 
-    
+def fun(x,y):
+    return (x,y)   
 if __name__ == '__main__':
     parameters= (
         (    0,    0,    0, 0.16,   0,    0),
