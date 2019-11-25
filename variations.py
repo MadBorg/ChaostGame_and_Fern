@@ -53,22 +53,22 @@ class Variations:
         return np.arctan2(self.y, self.x)
 
    # Variations
-    def linear():
+    def linear(self):
         self._u = self._u
         self._v = self._v
 
-    def handkerchief():
+    def handkerchief(self):
         self._u = r * sin()
 
-    def swirl():
+    def swirl(self):
         pass
 
-    def disc():
+    def disc(self):
         pass
 
     # choose atleast two more to implement.
-    def fun1():
+    def fun1(self):
         pass
 
-    def fun2():
+    def fun2(self):
         pass
