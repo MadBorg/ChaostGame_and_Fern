@@ -1,5 +1,5 @@
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 
 class Variations:
@@ -7,7 +7,7 @@ class Variations:
     Altrering coordinates.
     So if you have a set of coordinates it alters them in a specific way..
     """
-    variations = ["linear", "handkerchief", "swirl", "disc", "spherical", "sinusoidal"]
+    
     def __init__(self, x, y, colors="black"):
        # dock
 
@@ -32,8 +32,9 @@ class Variations:
         else:
             self.y = y
 
-       # standard
+       # public
         self.colors = colors
+        self.collection = {"linear":self.linear , "handkerchief":self.handkerchief , "swirl":self.swirl , "disc":self.disc , "spherical":self.spherical , "sinusoidal":self.sinusoidal }
 
        # private
         self._n = len(x)
@@ -91,3 +92,47 @@ class Variations:
         x, y = self.x, self.y
         self._u = np.sin(x)
         self._v = np.sin(y)
+
+   #methods
+    
+    def plot(self,cmap=None):
+        # fig, ax = plt.subplots()
+
+        plt.scatter(self.u, -self.v, c=self.colors, cmap=cmap, s=0.1)
+        plt.axis("equal")
+        plt.axis("off")
+
+
+def plot_grid():
+    plt.plot([-1, 1, 1, -1, -1], [-1, -1, 1, 1, -1], color="grey")
+    plt.plot([-1, 1], [0, 0], color="grey")
+    plt.plot([0, 0], [-1, 1], color="grey")
+
+
+
+def example_sulution():
+    N = 60
+    grid_values = np.linspace(-1, 1, N)
+    x_values = np.ones(N*N)
+    y_values = np.ones(N*N)
+    for i in range(N):
+        index = i*N
+        x_values[index:index+N] *= grid_values[i]
+        y_values[index:index+N] *= grid_values
+
+    coords_varia = Variations(x_values, y_values)
+        
+    variations = ["linear", "handkerchief", "swirl", "disc"]
+
+    plt.figure(10, figsize=(9, 9))
+    for i in range(4):
+        plt.subplot(221 + i)
+        plot_grid()
+        variation = variations[i]
+        coords_varia.collection[variation]()
+        coords_varia.plot()
+        plt.title(variation)
+    plt.show()
+
+if __name__ == "__main__":
+    example_sulution()
