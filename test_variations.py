@@ -85,6 +85,7 @@ def test_variatons_handkerchief():
 # def test_variatons_init_color():
 #     #test if color exist
 
+# TODO: Test your implementation by comparing plots of variations of a uniformly spaced grid $x, y \in [-1, 1]$ with the figures in the Catalog of Variations. Note that you cannot use meshgrid to generate the grid, as the grid must be represented as two one dimensional arrays containing $x$-values and $y$-values. Let the size of the grid be $60 \times 60$ coordinates(i.e. x and y should be arrays of length 3600).
 if __name__ == "__main__":
     test_variatons_init_coordinates_shape()
     test_variatons_init_dtypes()
