@@ -58,17 +58,28 @@ class Variations:
         self._v = self._v
 
     def handkerchief(self):
-        self._u = r * sin()
+        r, theta = self.r, self.theta
+        self._u = r * np.sin(theta + r)
+        self._v = r * np.cos(theta - r)
 
     def swirl(self):
-        pass
+        x, y =self.x, self.y
+        r = self.r
+        self._u = x*np.sin(r**2) - y*np.cos(r**2)
+        self._v = x*np.cos(r**2) + y*np.sin(r**2)
 
     def disc(self):
-        pass
-
+        theta, r = self.theta, self.r
+        self._u = (theta/np.pi) * np.sin(np.pi * r)
+        self._v = (theta/np.pi) * np.cos(np.pi * r)
     # choose atleast two more to implement.
-    def fun1(self):
-        pass
+    def spherical(self):
+        x, y = self.x, self.y
+        r = self.r
+        self._u = (1/r**2) * x
+        self._v = (1/r**2) * y
 
-    def fun2(self):
-        pass
+    def sinusoidal(self):
+        x, y = self.x, self.y
+        self._u = np.sin(x)
+        self._v = np.sin(y)
