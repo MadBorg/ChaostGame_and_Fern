@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+class AffineTransform():
 
-class AffineTransform:
     def __init__(self, a=0, b=0, c=0, d=0, e=0, f=0):
         self.a = a
         self.b = b
@@ -11,9 +11,9 @@ class AffineTransform:
         self.e = e
         self.f = f
 
-    def transform(self, x, y):
+    def __call__(self, x, y):
         point = np.array((x, y))
-        mat = np.matrix([[self.a, self.b], [self.c, self.d]])
+        mat = np.array([[self.a, self.b],[self.c, self.d]],np.float)
         ef = np.array((self.e, self.f))
 
         new_point = np.dot(mat,point) + ef
