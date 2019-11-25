@@ -7,7 +7,7 @@ class Variations:
     Altrering coordinates.
     So if you have a set of coordinates it alters them in a specific way..
     """
-
+    variations = ["linear", "handkerchief", "swirl", "disc", "spherical", "sinusoidal"]
     def __init__(self, x, y, colors="black"):
        # dock
 
@@ -51,6 +51,14 @@ class Variations:
     @property
     def phi(self):
         return np.arctan2(self.y, self.x)
+
+    @property
+    def u(self):
+        return self._u
+    
+    @property
+    def v(self):
+        return self._v
 
    # Variations
     def linear(self):
