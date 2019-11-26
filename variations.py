@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import chaos_game as chaos
+import fern as fern
 
 
 class Variations:
@@ -143,13 +144,52 @@ def example_sulution():
         plt.title(variation)
     plt.show()
 
+
 def example_chaos():
     N = 300
-    grid_values = np.linspace(-1, 1, N-5)
-    test = chaos.ChaosGame(n=4, r=1/3)
-    test.iterate(steps=N*N)
+    grid_values = np.linspace(-1, 1, N - 5)
+    test = chaos.ChaosGame(n=4, r=1 / 3)
+    test.iterate(steps=N * N)
     x_values = test.x_points
     y_values = test.y_points
+
+    coords_varia = Variations(x_values, y_values)
+
+    variations = ["linear", "handkerchief", "swirl", "disc"]
+
+    plt.figure(10, figsize=(9, 9))
+    for i in range(4):
+        plt.subplot(221 + i)
+        plot_grid()
+        variation = variations[i]
+        coords_varia.collection[variation]()
+        coords_varia.plot()
+        plt.title(variation)
+    plt.show()
+
+
+# WRONG
+def example_fern():
+    N = 200
+    grid_values = np.linspace(-1, 1, N)
+    parameters = (
+        (0, 0, 0, 0.16, 0, 0),
+        (0.85, 0.04, -0.04, 0.85, 0, 1.60),
+        (0.20, -0.26, 0.23, 0.22, 0, 1.60),
+        (-0.15, 0.28, 0.26, 0.24, 0, 0.44),
+    )
+    distribution = (0.01, 0.85, 0.07, 0.07)
+
+    points = fern.ferns(parameters, distribution, N * N)
+    # x_values = (points[:, 0])
+    # y_values = (points[:, 1])
+
+    x_values = np.interp(
+        points[:, 0], (points[:, 0].min(), points[:, 0].max()), (-1, 1)
+    )
+    y_values = np.interp(
+        points[:, 1], (points[:, 1].min(), points[:, 1].max()), (1, -1)
+    )
 
     coords_varia = Variations(x_values, y_values)
 
@@ -169,3 +209,4 @@ def example_chaos():
 if __name__ == "__main__":
     example_sulution()
     example_chaos()
+    example_fern()
