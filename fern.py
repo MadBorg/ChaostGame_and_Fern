@@ -20,7 +20,7 @@ class AffineTransform():
         self.new_point = new_point
         return new_point
 
- 
+
 def cumChoice(d, n):
     """
     Params:
@@ -80,7 +80,7 @@ def ferns(parameters, distribution, n, x0=0):
     return x
 
 def fun(x,y):
-    return (x,y)   
+    return (x,y)
 if __name__ == '__main__':
     parameters= (
         (    0,    0,    0, 0.16,   0,    0),
@@ -92,11 +92,6 @@ if __name__ == '__main__':
     n = 50_000
     points = ferns(parameters, distribution, n)
     plt.scatter(*zip(*points), marker=".", s=0.2, alpha=0.2, c="g")
+    plt.axis('equal')
+    plt.axis('off')
     plt.show()
-
-    # test = AffineTransform()
-    # test.transform(x=1, y=1)
-    # test.func_1()
-    # test.func_2()
-    # test.func_3()
-    # test.func_4()
