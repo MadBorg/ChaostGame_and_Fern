@@ -10,9 +10,9 @@ class Variations:
     """
 
     def __init__(self, x, y, colors="black"):
-        # dock
+       # dock
 
-        # asserts
+       # asserts
         try:
             iter(x)
         except:
@@ -22,7 +22,7 @@ class Variations:
         except:
             raise TypeError("y is not an iterable")
 
-        # selfs
+       # selfs
         # change dtype
         if type(x) != np.ndarray:
             self.x = np.array(x, dtype="float_")
@@ -33,7 +33,7 @@ class Variations:
         else:
             self.y = y
 
-        # public
+      # public
         self.colors = colors
         self.collection = {
             "linear": self.linear,
@@ -44,12 +44,12 @@ class Variations:
             "sinusoidal": self.sinusoidal,
         }
 
-        # private
+      # private
         self._n = len(x)
         self._u = x
         self._v = y
 
-    # Properties
+   # Properties
     @property
     def r(self):
         return np.sqrt(self.x ** 2 + self.y ** 2)
@@ -70,7 +70,7 @@ class Variations:
     def v(self):
         return self._v
 
-    # Variations
+   # Variations
     def linear(self):
         self._u = self._u
         self._v = self._v
@@ -165,7 +165,45 @@ def example_chaos():
         plt.title(variation)
     plt.show()
 
+def example_general(cls=None, N=300, **kwargs):
+    """
+    Params:
+    ----
+    cls: class
+        a class that gives coordinates via a iterate method and have the properties x_values and y_values
+    N: int
+        sqrt of number of iterations
+    **kwargs:
+        key word args for the class
+
+    
+    """
+    if cls is None:
+        example_sulution()
+        return 0
+    grid_values = np.linspace(-1, 1, N-5)
+    test = cls(**kwargs)
+    test.iterate(steps=N*N)
+    x_values = test.x_points
+    y_values = test.y_points
+
+    coords_varia = Variations(x_values, y_values)
+
+    variations = ["linear", "handkerchief", "swirl", "disc"]
+
+    plt.figure(10, figsize=(9, 9))
+    for i in range(4):
+        plt.subplot(221 + i)
+        plot_grid()
+        variation = variations[i]
+        coords_varia.collection[variation]()
+        coords_varia.plot()
+        plt.title(variation)
+    plt.show()
+
+
 
 if __name__ == "__main__":
-    example_sulution()
-    example_chaos()
+    # example_sulution()
+    # example_chaos()
+    example_general(chaos.ChaosGame, n=6, r=1/5)
