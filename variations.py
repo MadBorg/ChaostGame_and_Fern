@@ -7,11 +7,11 @@ class Variations:
     Altrering coordinates.
     So if you have a set of coordinates it alters them in a specific way..
     """
-    
-    def __init__(self, x, y, colors="black"):
-       # dock
 
-       # asserts
+    def __init__(self, x, y, colors="black"):
+        # dock
+
+        # asserts
         try:
             iter(x)
         except:
@@ -21,8 +21,8 @@ class Variations:
         except:
             raise TypeError("y is not an iterable")
 
-      # selfs
-       # change dtype
+        # selfs
+        # change dtype
         if type(x) != np.ndarray:
             self.x = np.array(x, dtype="float_")
         else:
@@ -32,18 +32,26 @@ class Variations:
         else:
             self.y = y
 
-       # public
+        # public
         self.colors = colors
-        self.collection = {"linear":self.linear , "handkerchief":self.handkerchief , "swirl":self.swirl , "disc":self.disc , "spherical":self.spherical , "sinusoidal":self.sinusoidal }
+        self.collection = {
+            "linear": self.linear,
+            "handkerchief": self.handkerchief,
+            "swirl": self.swirl,
+            "disc": self.disc,
+            "spherical": self.spherical,
+            "sinusoidal": self.sinusoidal,
+        }
 
-       # private
+        # private
         self._n = len(x)
         self._u = x
         self._v = y
-   # Properties
+
+    # Properties
     @property
     def r(self):
-        return np.sqrt(self.x**2 + self.y**2)
+        return np.sqrt(self.x ** 2 + self.y ** 2)
 
     @property
     def theta(self):
@@ -56,12 +64,12 @@ class Variations:
     @property
     def u(self):
         return self._u
-    
+
     @property
     def v(self):
         return self._v
 
-   # Variations
+    # Variations
     def linear(self):
         self._u = self._u
         self._v = self._v
@@ -72,30 +80,31 @@ class Variations:
         self._v = r * np.cos(theta - r)
 
     def swirl(self):
-        x, y =self.x, self.y
+        x, y = self.x, self.y
         r = self.r
-        self._u = x*np.sin(r**2) - y*np.cos(r**2)
-        self._v = x*np.cos(r**2) + y*np.sin(r**2)
+        self._u = x * np.sin(r ** 2) - y * np.cos(r ** 2)
+        self._v = x * np.cos(r ** 2) + y * np.sin(r ** 2)
 
     def disc(self):
         theta, r = self.theta, self.r
-        self._u = (theta/np.pi) * np.sin(np.pi * r)
-        self._v = (theta/np.pi) * np.cos(np.pi * r)
+        self._u = (theta / np.pi) * np.sin(np.pi * r)
+        self._v = (theta / np.pi) * np.cos(np.pi * r)
+
     # choose atleast two more to implement.
     def spherical(self):
         x, y = self.x, self.y
         r = self.r
-        self._u = (1/r**2) * x
-        self._v = (1/r**2) * y
+        self._u = (1 / r ** 2) * x
+        self._v = (1 / r ** 2) * y
 
     def sinusoidal(self):
         x, y = self.x, self.y
         self._u = np.sin(x)
         self._v = np.sin(y)
 
-   #methods
-    
-    def plot(self,cmap=None):
+    # methods
+
+    def plot(self, cmap=None):
         # fig, ax = plt.subplots()
 
         plt.scatter(self.u, -self.v, c=self.colors, cmap=cmap, s=0.1)
@@ -109,19 +118,18 @@ def plot_grid():
     plt.plot([0, 0], [-1, 1], color="grey")
 
 
-
 def example_sulution():
     N = 60
     grid_values = np.linspace(-1, 1, N)
-    x_values = np.ones(N*N)
-    y_values = np.ones(N*N)
+    x_values = np.ones(N * N)
+    y_values = np.ones(N * N)
     for i in range(N):
-        index = i*N
-        x_values[index:index+N] *= grid_values[i]
-        y_values[index:index+N] *= grid_values
+        index = i * N
+        x_values[index : index + N] *= grid_values[i]
+        y_values[index : index + N] *= grid_values
 
     coords_varia = Variations(x_values, y_values)
-        
+
     variations = ["linear", "handkerchief", "swirl", "disc"]
 
     plt.figure(10, figsize=(9, 9))
@@ -133,6 +141,7 @@ def example_sulution():
         coords_varia.plot()
         plt.title(variation)
     plt.show()
+
 
 if __name__ == "__main__":
     example_sulution()
