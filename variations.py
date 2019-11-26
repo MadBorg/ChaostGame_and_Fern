@@ -167,6 +167,7 @@ def example_chaos():
         plt.title(variation)
     plt.show()
 
+#not needed. 
 def example_general(cls=None, N=300, **kwargs):
     """
     Params:
