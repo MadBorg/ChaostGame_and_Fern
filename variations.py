@@ -52,6 +52,18 @@ class Variations:
 
    # Properties
     @property
+    def u(self):
+        return self._u / self.scale
+
+    @property
+    def v(self):
+        return self._v / self.scale
+    
+    @property
+    def scale(self):
+        return max((max(self._u), max(self._v)))
+
+    @property
     def r(self):
         return np.sqrt(self.x ** 2 + self.y ** 2)
 
@@ -63,13 +75,13 @@ class Variations:
     def phi(self):
         return np.arctan2(self.y, self.x)
 
-    @property
-    def u(self):
-        return self._u
+    # @property
+    # def u(self):
+    #     return self._u
 
-    @property
-    def v(self):
-        return self._v
+    # @property
+    # def v(self):
+    #     return self._v
 
    # Variations
     def linear(self):
@@ -109,8 +121,10 @@ class Variations:
     def plot(self, cmap=None):
         # fig, ax = plt.subplots()
 
-        plt.scatter(self.u, -self.v, c=self.colors, cmap=cmap, s=0.1)
-        plt.axis("equal")
+        plt.scatter(self.u, -self.v, c=self.colors, cmap=cmap, s=0.1, alpha=0.1)
+        plt.ylim((-1.2, 1.2))
+        plt.xlim((-1.2, 1.2 ))
+        # plt.axis("equal")
         plt.axis("off")
 
 
@@ -221,12 +235,18 @@ def example_fern():
     # x_values = (points[:, 0])
     # y_values = (points[:, 1])
 
-    x_values = np.interp(
-        points[:, 0], (points[:, 0].min(), points[:, 0].max()), (-1, 1)
-    )
-    y_values = np.interp(
-        points[:, 1], (points[:, 1].min(), points[:, 1].max()), (1, -1)
-    )
+    # x_values = np.interp(
+    #     points[:, 0], (points[:, 0].min(), points[:, 0].max()), (-1, 1)
+    # )
+    # y_values = np.interp(
+    #     points[:, 1], (points[:, 1].min(), points[:, 1].max()), (1, -1)
+    # )
+    # scale = max((max(points[:,1]), max(points[:,0])))
+    # points = points / scale
+    # # import IPython; IPython.embed()
+    x_values = points[:,0]
+    y_values = points[:,1]
+
 
     coords_varia = Variations(x_values, y_values)
 
@@ -244,12 +264,6 @@ def example_fern():
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     # example_sulution()
     # example_chaos()
-    example_general(chaos.ChaosGame, n=6, r=1/5)
-=======
-    example_sulution()
-    example_chaos()
     example_fern()
->>>>>>> master
