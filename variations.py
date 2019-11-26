@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import chaos_game as chaos
 
 
 class Variations:
@@ -142,6 +143,29 @@ def example_sulution():
         plt.title(variation)
     plt.show()
 
+def example_chaos():
+    N = 300
+    grid_values = np.linspace(-1, 1, N-5)
+    test = chaos.ChaosGame(n=4, r=1/3)
+    test.iterate(steps=N*N)
+    x_values = test.x_points
+    y_values = test.y_points
+
+    coords_varia = Variations(x_values, y_values)
+
+    variations = ["linear", "handkerchief", "swirl", "disc"]
+
+    plt.figure(10, figsize=(9, 9))
+    for i in range(4):
+        plt.subplot(221 + i)
+        plot_grid()
+        variation = variations[i]
+        coords_varia.collection[variation]()
+        coords_varia.plot()
+        plt.title(variation)
+    plt.show()
+
 
 if __name__ == "__main__":
     example_sulution()
+    example_chaos()
