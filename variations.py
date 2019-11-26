@@ -174,9 +174,8 @@ def example_general(cls=None, N=300, **kwargs):
     N: int
         sqrt of number of iterations
     **kwargs:
-        key word args for the class
+        keywordarguments for the class
 
-    
     """
     if cls is None:
         example_sulution()
