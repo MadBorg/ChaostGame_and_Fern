@@ -79,7 +79,7 @@ def ferns(parameters, distribution, n, x0=0):
     x = np.zeros((n, 2))
     x[0] = x0
     choices = cumChoice(distribution, n)
-    for i in range(0, len(choices)):
+    for i in range(1, len(choices)):
         # print(f"x[i]:{x[i]}, *zip(z[i]):{x[i]))}")
         x[i] = f[choices[i]](x[i - 1, 0], x[i - 1, 1])
     return x

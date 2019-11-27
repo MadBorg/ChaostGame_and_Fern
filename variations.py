@@ -17,11 +17,11 @@ class Variations:
         try:
             iter(x)
         except:
-            raise TypeError("x is not an iterable")
+            raise TypeError("(Variations) x is not an iterable")
         try:
             iter(y)
         except:
-            raise TypeError("y is not an iterable")
+            raise TypeError("(Variations) y is not an iterable")
 
        # selfs
         # change dtype
@@ -34,6 +34,10 @@ class Variations:
         else:
             self.y = y
 
+        #scale
+        scale = max((max(abs(y)), max(abs(x))))
+        self.y = self.y / scale
+        self.x = self.x / scale
       # public
         self.colors = colors
         self.collection = {
@@ -47,10 +51,36 @@ class Variations:
 
       # private
         self._n = len(x)
-        self._u = x
-        self._v = y
+
+   #private methods
+    def _center(self):
+        u = self._u
+        v = self._v
+        # import IPython; IPython.embed()
+        x_median = np.mean(u)
+        y_median = np.mean(v)
+        self._u = u - x_median
+        self._v = v - y_median
 
    # Properties
+    @property
+    def u(self):
+        # print(f"max(_u):{max(self._u)}")
+        return self._u / self.scale
+        # return self._u / max(self._u)
+        # return self._u
+
+    @property
+    def v(self):
+        return self._v / self.scale
+        # print(f"max(_v):{max(self._v)}")
+        # return self._v / max(self._v)
+        # return self._v
+    
+    @property
+    def scale(self):
+        return max((max(abs(self._u)), max(abs(self._v))))
+
     @property
     def r(self):
         return np.sqrt(self.x ** 2 + self.y ** 2)
@@ -63,53 +93,59 @@ class Variations:
     def phi(self):
         return np.arctan2(self.y, self.x)
 
-    @property
-    def u(self):
-        return self._u
-
-    @property
-    def v(self):
-        return self._v
-
    # Variations
-    def linear(self):
-        self._u = self._u
-        self._v = self._v
+    def linear(self, center=False):
+        self._u = self.x
+        self._v = self.y
+        if center:
+            self._center()
 
-    def handkerchief(self):
+    def handkerchief(self, center=False):
         r, theta = self.r, self.theta
         self._u = r * np.sin(theta + r)
         self._v = r * np.cos(theta - r)
+        if center:
+            self._center()
 
-    def swirl(self):
+    def swirl(self, center=False):
         x, y = self.x, self.y
         r = self.r
         self._u = x * np.sin(r ** 2) - y * np.cos(r ** 2)
         self._v = x * np.cos(r ** 2) + y * np.sin(r ** 2)
+        if center:
+            self._center()
 
-    def disc(self):
+    def disc(self, center=False):
         theta, r = self.theta, self.r
         self._u = (theta / np.pi) * np.sin(np.pi * r)
         self._v = (theta / np.pi) * np.cos(np.pi * r)
+        if center:
+            self._center()
 
     # choose atleast two more to implement.
-    def spherical(self):
+    def spherical(self, center=False):
         x, y = self.x, self.y
         r = self.r
         self._u = (1 / r ** 2) * x
         self._v = (1 / r ** 2) * y
+        if center:
+            self._center()
 
-    def sinusoidal(self):
+    def sinusoidal(self, center=False):
         x, y = self.x, self.y
         self._u = np.sin(x)
         self._v = np.sin(y)
+        if center:
+            self._center()
 
-    # methods
+   # methods
 
     def plot(self, cmap=None):
         # fig, ax = plt.subplots()
 
         plt.scatter(self.u, -self.v, c=self.colors, cmap=cmap, s=0.1)
+        # plt.ylim((-1.2, 1.2))
+        # plt.xlim((-1.2, 1.2 ))
         plt.axis("equal")
         plt.axis("off")
 
@@ -118,7 +154,6 @@ def plot_grid():
     plt.plot([-1, 1, 1, -1, -1], [-1, -1, 1, 1, -1], color="grey")
     plt.plot([-1, 1], [0, 0], color="grey")
     plt.plot([0, 0], [-1, 1], color="grey")
-
 
 def example_sulution():
     N = 60
@@ -143,7 +178,6 @@ def example_sulution():
         coords_varia.plot()
         plt.title(variation)
     plt.show()
-
 
 def example_chaos():
     N = 300
@@ -203,8 +237,6 @@ def example_general(cls=None, N=300, **kwargs):
         plt.title(variation)
     plt.show()
 
-
-
 # WRONG
 def example_fern():
     N = 200
@@ -218,15 +250,10 @@ def example_fern():
     distribution = (0.01, 0.85, 0.07, 0.07)
 
     points = fern.ferns(parameters, distribution, N * N)
-    # x_values = (points[:, 0])
-    # y_values = (points[:, 1])
 
-    x_values = np.interp(
-        points[:, 0], (points[:, 0].min(), points[:, 0].max()), (-1, 1)
-    )
-    y_values = np.interp(
-        points[:, 1], (points[:, 1].min(), points[:, 1].max()), (1, -1)
-    )
+    x_values = points[:,0]
+    y_values = -points[:,1]
+
 
     coords_varia = Variations(x_values, y_values)
 
@@ -235,21 +262,15 @@ def example_fern():
     plt.figure(10, figsize=(9, 9))
     for i in range(4):
         plt.subplot(221 + i)
-        plot_grid()
+        # plot_grid()
         variation = variations[i]
-        coords_varia.collection[variation]()
+        coords_varia.collection[variation](center=False)
         coords_varia.plot()
         plt.title(variation)
     plt.show()
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    # example_sulution()
-    # example_chaos()
-    example_general(chaos.ChaosGame, n=6, r=1/5)
-=======
     example_sulution()
     example_chaos()
     example_fern()
->>>>>>> master

@@ -5,7 +5,7 @@ import variations
 def test_variatons_init_coordinates_shape():
     n = 1e5
     x = np.linspace(-10, 100, n)
-    y = np.linspace(-10, 100, n)*2
+    y = np.linspace(-10, 100, n)
     test = variations.Variations(x, y)
     assert x.shape == (n,), f"x.shape should be ({n},), but it is {x.shape}."
     assert y.shape == (n,), f"y.shape should be ({n},), but it is {y.shape}."
