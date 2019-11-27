@@ -213,9 +213,6 @@ def example_chaos():
         plt.title(variation)
     plt.show()
 
-<<<<<<< HEAD
-#not needed.
-=======
 def example_weights():
 
     N = 200
@@ -247,7 +244,6 @@ def example_weights():
 
 
 #not needed. 
->>>>>>> sanders
 def example_general(cls=None, N=300, **kwargs):
     """
     Params:
