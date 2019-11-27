@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import chaos_game as chaos
-import fern 
+import fern
 
 
 class Variations:
