@@ -22,7 +22,6 @@ class Variations:
             iter(y)
         except:
             raise TypeError("(Variations) y is not an iterable")
-
        # selfs
         # change dtype
         if type(x) != np.ndarray:
@@ -52,7 +51,20 @@ class Variations:
       # private
         self._n = len(x)
 
-   #private methods
+    def __call__(self, coeffs):
+        keys = list(coeffs)
+        # import IPython; IPython.embed()
+        self.collection[keys[1]]()
+        u1 = self.u.copy()
+        v1 = self.v.copy()
+        self.collection[keys[0]]()
+        u2 = self.u.copy()
+        v2 = self.v.copy()
+        self._u = u1*coeffs[keys[1]] + u2*coeffs[keys[0]]
+        self._v = v1*coeffs[keys[1]] + v2*coeffs[keys[0]]
+        # return self._u, self._v
+
+   # private methods
     def _center(self):
         u = self._u
         v = self._v
@@ -66,16 +78,16 @@ class Variations:
     @property
     def u(self):
         # print(f"max(_u):{max(self._u)}")
-        return self._u / self.scale
+        # return self._u / self.scale
         # return self._u / max(self._u)
-        # return self._u
+        return self._u
 
     @property
     def v(self):
-        return self._v / self.scale
+        # return self._v / self.scale
         # print(f"max(_v):{max(self._v)}")
         # return self._v / max(self._v)
-        # return self._v
+        return self._v
     
     @property
     def scale(self):
@@ -201,7 +213,41 @@ def example_chaos():
         plt.title(variation)
     plt.show()
 
+<<<<<<< HEAD
 #not needed.
+=======
+def example_weights():
+
+    N = 200
+    grid_values = np.linspace(-1, 1, N)
+    parameters = (
+        (0, 0, 0, 0.16, 0, 0),
+        (0.85, 0.04, -0.04, 0.85, 0, 1.60),
+        (0.20, -0.26, 0.23, 0.22, 0, 1.60),
+        (-0.15, 0.28, 0.26, 0.24, 0, 0.44),
+    )
+    distribution = (0.01, 0.85, 0.07, 0.07)
+
+    points = fern.ferns(parameters, distribution, N * N)
+
+    N = 9
+    sub = (np.sqrt(N)*110) + 1
+    coeff = np.linspace(0, 1, N)
+    coeffs = {}
+
+    fern_varia = Variations(points[:,0], -points[:,1], colors="forestgreen")
+    plt.figure(13, figsize=(9, 9))
+    for i in range(N):
+        plt.subplot(sub + i)
+        coeffs["swirl"] = coeff[i]
+        coeffs["linear"] = 1 - coeff[i]
+        fern_varia(coeffs)
+        fern_varia.plot()
+    plt.show()
+
+
+#not needed. 
+>>>>>>> sanders
 def example_general(cls=None, N=300, **kwargs):
     """
     Params:
@@ -272,5 +318,6 @@ def example_fern():
 
 if __name__ == "__main__":
     example_sulution()
-    example_chaos()
+    # example_chaos()
     example_fern()
+    example_weights()
