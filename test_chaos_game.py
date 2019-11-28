@@ -18,8 +18,8 @@ def test_called_iterate():
 
 def test_big_y():
     test = ChaosGame(4, 1/2)
-    test.iterate()
-    points = test.y
+    test.iterate(10_000)
+    points = test.x
     assert points.any() <= 1, "not all points y is smaller then one"
         
 def negative_n():
