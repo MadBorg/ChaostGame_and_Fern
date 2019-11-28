@@ -3,6 +3,14 @@ import matplotlib.pyplot as plt
 
 
 class AffineTransform:
+    """Class for a general affine transformation in the plane.
+
+    Parameters
+    -----------
+    a, b, c, d, e, f: num, default: 0
+    Free parameters for an affine transformation.
+    """
+
     def __init__(self, a=0, b=0, c=0, d=0, e=0, f=0):
         self.a = a
         self.b = b
@@ -12,81 +20,75 @@ class AffineTransform:
         self.f = f
 
     def __call__(self, x, y):
+        """Method for point (x,y) transformation into f(x,y)."""
         point = np.array((x, y))
         mat = np.array([[self.a, self.b], [self.c, self.d]], np.float)
         ef = np.array((self.e, self.f))
 
-        new_point = np.dot(mat, point) + ef
-        self.new_point = new_point
-        return new_point
+        return np.dot(mat, point) + ef
 
+class Ferns:
+    """A class for ferns.
 
-def cumChoice(d, n):
-    """
-    Params:
-    ----
-    d np.array(mxn)<float>
-        Distribution for the cumulative distributions
-    n int
-        number for choices
-    Returns:
-    ----
-    choices
-        n Choises derrived from the distribution
-    """
-    r = np.random.random(n)
-    d_cumulative = np.cumsum(d)
-    choices = np.zeros(n, dtype="int")
-
-    for i in range(n):
-        for j, d in enumerate(d_cumulative):
-            if r[i] < d:
-                choices[i] = j
-                break
-    return choices
-
-
-def ferns(parameters, distribution, n, x0=0):
-    """
-    Params:
-    ----
-    parameters: (m * k) iterable float
-        Parameters for the different fern instances
-    distribution: (m) iterable float
+    Parameters
+    -----------
+    p : (m*k) iterable float
+        Parameters for different ferns instances.
+    d : m iterable float
         The distribution of where the fern instances is going to be picked.
         sum(distribution) == 1
-    x0: (2) iterable
-        starting point
-    Returns:
-    ----
-    x (n,2) np.array
-        coordinate points
-
+    n : int
+        Number of iterations.
+    x0 : (2) iterable
+        Coordinates for starting point.
     """
-    eps = 1e-13
-    assert (
-        sum(distribution) - 1 < eps
-    ), f"sum(distribution must be 1) it is {sum(distribution)}"
-    assert len(parameters) == len(
-        distribution
-    ), f"lenth of parameters must be equal to lenght of distribution: len(parameters):{len(parameters)}, len(distribution):{len(distribution)}"
-    # import IPython; IPython.embed()
+    def __init__(self, p, d, n, x0=0):
+        self.p = p
+        self.d = d
+        self.n = n
+        self.x0 = x0
 
-    f = []
-    for i in parameters:
-        # print(f"\n i:{i}")
-        f.append(AffineTransform(a=i[0], b=i[1], c=i[2], d=i[3], e=i[4], f=i[5]))
-    x = np.zeros((n, 2))
-    x[0] = x0
-    choices = cumChoice(distribution, n)
-    for i in range(1, len(choices)):
-        # print(f"x[i]:{x[i]}, *zip(z[i]):{x[i]))}")
-        x[i] = f[choices[i]](x[i - 1, 0], x[i - 1, 1])
-    return x
+    def choose_func(self):
+        """Generates n choices of functions derived from the cumulative distribution"""
+        d_cumulative = np.cumsum(self.d)
+        func_val = np.zeros(self.n, dtype="int")
+        r = np.random.random(self.n)
 
+        for i in range(self.n):
+            for j, p in enumerate(d_cumulative):
+                if r[i] < p:
+                    func_val[i] = j
+                    break
+        return func_val
 
-def fun(x, y):
-    return (x, y)
+    def iterate(self):
+        """Generates n coordinates (x, y).
+
+        Notes
+        ------
+        The coordinate points depend on given parameters and the assigned
+        probability of the functions.
+        """
+        p = self.p
+        d = self.d
+        n = self.n
+
+        eps = 1e-13
+        assert sum(d) - 1 < eps, f"sum(d) must equal 1, not {sum(d)}"
+        assert len(p) == len(d), f"p and d must be of equal length: p:{len(p)}, d:{len(d)}"
+
+        f = []
+        for i in p:
+            f.append(AffineTransform(a=i[0], b=i[1], c=i[2], d=i[3], e=i[4], f=i[5]))
+
+        x = np.zeros((n, 2))
+        x[0] = np.array(self.x0)
+        func_val = self.choose_func()
+
+        for i in range(1, n):
+            x[i] = f[func_val[i]](x[i - 1, 0], x[i - 1, 1])
+
+        return x
 
 
 if __name__ == "__main__":
@@ -97,9 +99,21 @@ if __name__ == "__main__":
         (-0.15, 0.28, 0.26, 0.24, 0, 0.44),
     )
     distribution = (0.01, 0.85, 0.07, 0.07)
-    n = 50_000
-    points = ferns(parameters, distribution, n)
-    plt.scatter(*zip(*points), marker=".", s=0.2, alpha=0.2, c="g")
+
+    n = 100_000
+    test = Ferns(parameters, distribution, n)
+    x = test.iterate()
+
+    plt.scatter(*zip(*x), marker=".", s=0.2, alpha=0.2, c="forestgreen")
     plt.axis("equal")
     plt.axis("off")
     plt.show()
+
+    """
+    Another one:
+    parameters1 = (
+        (0.44, 0.32, -0.07, 0.61, -0.001, -0.1),
+        (-0.82, 0.16, -0.16, 0.81, -0.001, 4),
+    )
+    distribution1 = (0.3, 0.7)
+    """
