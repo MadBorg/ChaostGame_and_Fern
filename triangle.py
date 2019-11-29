@@ -92,5 +92,5 @@ if __name__ == "__main__":
     tri = Triangle(np.array((0, 0)), np.array((1, 0)))
     x, k = tri.sierpinski_points(n)
 
-    sierpinski_color_plot(x, k)
+    # sierpinski_color_plot(x, k)
     sierpinski_alt_colors(x, k)
