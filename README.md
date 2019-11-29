@@ -56,4 +56,12 @@ a n-gon with n=6, r=1/3 using 100 000-5 points and the matplotlib colormap "twil
 test_chaos_game.py - File runs 4 test for the class ChaosGame.
 
 ## Part C)
+fern.py - Running the file generates a plot of a Barnsley fern, using a class
+for affine transformation and another class Ferns. The class Ferns makes a list
+og n values representing the choices of functions, instead of choosing a function
+for each iteration.
+
+For another "fern" using 2 functions with 2 assigned probabilities, use parameters1
+and distribution1.
+
 ## Part D)
