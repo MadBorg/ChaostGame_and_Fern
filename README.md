@@ -44,10 +44,16 @@
 
 ## Part A)
 triangle.py - Running the file will generate two plots of the sierpinski triangle.
-The first plot uses 3 colors for pointa corresponding to the corner the point was
+The first plot uses 3 colors for points corresponding to the corner the point was
 derived from. The second plot uses gradual RGB colors for points dependent on
 the corner the point was derived from.
 
 ## Part B)
+chaos_game.py - Running the file will generate a plot using the chaos game for
+a n-gon with n=6, r=1/3 using 100 000-5 points and the matplotlib colormap "twilight".
+5 plots using the chaos game for different n-gons is in the map "figures".
+
+test_chaos_game.py - File runs 4 test for the class ChaosGame.
+
 ## Part C)
 ## Part D)
