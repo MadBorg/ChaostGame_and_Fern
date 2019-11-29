@@ -6,8 +6,16 @@ import fern as fern
 
 class Variations:
     """
-    Altrering coordinates.
-    So if you have a set of coordinates it alters them in a specific way..
+    A class for remapping the plane.
+
+    Parameters
+    -----------
+    x : n iterable
+        x-coordinates
+    y : n iterable
+        y-coordinates corresponding to x
+    colors : n color values, default: "black"
+        Color for plotting x and y coordinates.
     """
 
     def __init__(self, x, y, colors="black"):
@@ -61,10 +69,12 @@ class Variations:
    # Properties
     @property
     def u(self):
+        """Returns u scaled with largest absolute value of given coordinates"""
         return self._u / self.scale
 
     @property
     def v(self):
+        """Returns v scaled with largest absolute value of given coordinates"""
         return self._v / self.scale
 
     @property
@@ -117,12 +127,14 @@ class Variations:
         self._v = np.sin(y)
 
     def plot(self, cmap=None):
+        """Generates plot using lates computed variation of coordinates."""
         plt.scatter(self.u, -self.v, c=self.colors, cmap=cmap, s=0.1)
         plt.axis("equal")
         plt.axis("off")
 
 
 def plot_grid():
+    """Generates plot of a uniformly spaced grid (-1,1)."""
     plt.plot([-1, 1, 1, -1, -1], [-1, -1, 1, 1, -1], color="grey")
     plt.plot([-1, 1], [0, 0], color="grey")
     plt.plot([0, 0], [-1, 1], color="grey")
