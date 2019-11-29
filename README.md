@@ -18,7 +18,7 @@
                 using a rotation matrix to rotate the difference between c1 and c0 60 degrees. That way we get a equilateral triangle.
             if plot:
                 plots the 3 points in the triangle.
-            
+
         Returns
         ----
             np.array,np.array,np.array
@@ -41,6 +41,8 @@
             shape:(n,2)
         k: numpy array<int>
             shape:(3, n)
-        
-            
-        
+
+## Part A)
+## Part B)
+## Part C)
+## Part D)
