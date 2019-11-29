@@ -140,7 +140,7 @@ class ChaosGame:
     #NOT FINISHED
     def savepng(self, outfile, color=False, cmap="jet"):
         self.show(color, cmap)
-        self.fig.savefig(outfile)
+        self.fig.savefig(outfile, dpi=300)
 
 
 if __name__ == "__main__":
