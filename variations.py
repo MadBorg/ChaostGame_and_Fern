@@ -54,6 +54,7 @@ class Variations:
         }
 
     def __call__(self, coeffs):
+        """Generates a linear combination of two variations with coefficients."""
         keys = list(coeffs)
 
         self.collection[keys[1]]()
@@ -213,7 +214,7 @@ def example_fern():
 
 def example_transformation():
     """Plot of the Barnsely fern with linear combinations of variations.
-    
+
     The linear combination gradually goes from linear -> swirl in 9 different
     combinations of the variations.
     """
