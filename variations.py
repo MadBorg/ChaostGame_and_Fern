@@ -141,6 +141,7 @@ def plot_grid():
 
 
 def example_solution():
+    """Example given in assignment, scaled."""
     N = 60
     grid_values = np.linspace(-1, 1, N)
     x_values = np.ones(N * N)
@@ -166,6 +167,7 @@ def example_solution():
 
 
 def example_chaos():
+    """Plot of different variations of n-gon, n=4."""
     test = chaos.ChaosGame(n=4, r=1/3)
     test.iterate(10000)
     x, y, color = test.x_values, test.y_values, test.color
@@ -184,6 +186,7 @@ def example_chaos():
 
 
 def example_fern():
+    """Plot of different variations of the Barnsley fern."""
     parameters = (
         (0, 0, 0, 0.16, 0, 0),
         (0.85, 0.04, -0.04, 0.85, 0, 1.60),
@@ -209,6 +212,11 @@ def example_fern():
 
 
 def example_transformation():
+    """Plot of the Barnsely fern with linear combinations of variations.
+    
+    The linear combination gradually goes from linear -> swirl in 9 different
+    combinations of the variations.
+    """
     parameters = (
         (0, 0, 0, 0.16, 0, 0),
         (0.85, 0.04, -0.04, 0.85, 0, 1.60),
