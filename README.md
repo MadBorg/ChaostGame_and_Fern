@@ -41,6 +41,22 @@
             shape:(n,2)
         k: numpy array<int>
             shape:(3, n)
+            
+##How to run
+None of the files take any input. To run a file type:
+```
+$ python3 [file]
+```
+
+To run a test file type:
+```
+$ pytest [file]
+```
+or just type
+```
+$ pytest -v
+```
+
 
 ## Part A)
 triangle.py - Running the file will generate two plots of the sierpinski triangle.
