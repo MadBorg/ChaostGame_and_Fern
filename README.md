@@ -62,6 +62,8 @@ og n values representing the choices of functions, instead of choosing a functio
 for each iteration.
 
 For another "fern" using 2 functions with 2 assigned probabilities, use parameters1
-and distribution1.
+and distribution1 in the docstring at the bottom of the program.
 
 ## Part D)
+variations.py - Running the file generates 4 plots scaled to fit on a uniformly
+spaced grid (-1, 1).
