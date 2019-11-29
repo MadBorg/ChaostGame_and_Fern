@@ -114,3 +114,7 @@ example_transformation():
 ```
 Shows the effect of the Variation class on a fern, but showing the gradual effect going from linear to swirl.
 ```
+
+## Misc.
+
+Mappen examples&other er for filer som ikke er en del av inleveringen.
