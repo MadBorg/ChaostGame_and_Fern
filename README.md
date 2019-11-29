@@ -43,6 +43,11 @@
             shape:(3, n)
 
 ## Part A)
+triangle.py - Running the file will generate two plots of the sierpinski triangle.
+The first plot uses 3 colors for pointa corresponding to the corner the point was
+derived from. The second plot uses gradual RGB colors for points dependent on
+the corner the point was derived from.
+
 ## Part B)
 ## Part C)
 ## Part D)
