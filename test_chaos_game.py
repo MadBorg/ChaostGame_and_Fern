@@ -21,8 +21,8 @@ def test_big_y():
     test.iterate(10_000)
     points = test.x
     assert points.any() <= 1, "not all points y is smaller then one"
-        
-def negative_n():
+
+def test_negative_n():
     n = -4
     with npt.assert_raises(ValueError):
         ChaosGame(n, 1/2)
@@ -33,4 +33,4 @@ if __name__ == "__main__":
     test_init_values()
     test_called_iterate()
     test_big_y()
-    negative_n()
+    test_negative_n()
