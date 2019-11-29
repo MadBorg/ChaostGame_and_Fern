@@ -41,8 +41,8 @@
             shape:(n,2)
         k: numpy array<int>
             shape:(3, n)
-            
-##How to run
+
+## How to run
 None of the files take any input. To run a file type:
 ```
 $ python3 [file]
