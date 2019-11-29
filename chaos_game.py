@@ -137,7 +137,7 @@ class ChaosGame:
         self.plot(color, cmap)
         plt.show()
 
-    #NOT FINISHED
+    
     def savepng(self, outfile, color=False, cmap="jet"):
         self.show(color, cmap)
         self.fig.savefig(outfile, dpi=300)
