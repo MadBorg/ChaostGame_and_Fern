@@ -145,6 +145,6 @@ class ChaosGame:
 
 if __name__ == "__main__":
 
-    test = ChaosGame(n=6, r=1/3)
+    test = ChaosGame(n=4, r=1/3)
     test.iterate(steps=100_000)
     test.show(color=True, cmap="twilight")
