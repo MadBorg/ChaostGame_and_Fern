@@ -43,3 +43,20 @@ and distribution1 in the docstring at the bottom of the program.
 ## Part D)
 variations.py - Running the file generates 4 plots scaled to fit on a uniformly
 spaced grid (-1, 1).
+
+example_solution():
+
+    Shows the effect of the Variation class on a mesh. Showing 4 of the varaions, linear, handkercheif, swirl, disc.
+
+example_chaos():
+
+    Shows the effect of the Variation class on a n=4 chaos_game. Showing 4 of the varaions, linear, handkercheif, swirl, disc. With color gradient calculated from the chaosgame.
+
+example_fern():
+
+    Shows the effect of the Variation class on a fern. Showing 4 of the varaions, linear, handkercheif, swirl, disc. In the color green.
+
+example_transformation():
+
+    Shows the effect of the Variation class on a fern, but showing the gradual effect going from linear to swirl
+
